@@ -3,14 +3,12 @@
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>xyz.dignam.apple-music-to-slack</string>
+    <string>me.frizlab.apple-music-to-slack</string>
 
     <key>EnvironmentVariables</key>
     <dict>
         <key>SLACK_SECRET_TOKEN</key>
         <string>xoxp-change-me-!!!!-11111111111111111111111111111111</string>
-        <key>RUST_LOG</key>
-        <string>info</string>
     </dict>
 
     <key>ProgramArguments</key>
@@ -23,6 +21,5 @@
 
     <key>StartInterval</key>
     <integer>10</integer> <!-- seconds -->
-
 </dict>
 </plist>
