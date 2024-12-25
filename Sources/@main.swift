@@ -1,7 +1,6 @@
 import Foundation
 
 import ArgumentParser
-import CLTLogger
 import Logging
 
 
@@ -18,7 +17,8 @@ struct Main : AsyncParsableCommand {
 	
 	func run() async throws {
 		let logger = logger(verbose ? .debug : .notice)
-		logger.debug("Hello World!")
+		let currentTrackInfo = try CurrentTrackInfo.get(logger: logger)
+		logger.debug("Music track info.", metadata: ["info": "\(currentTrackInfo)"])
 	}
 	
 }

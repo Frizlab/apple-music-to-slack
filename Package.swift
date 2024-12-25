@@ -17,6 +17,6 @@ let package = Package(
 		.executableTarget(name: "AppleMusicToSlack", dependencies: [
 			.product(name: "ArgumentParser", package: "swift-argument-parser"),
 			.product(name: "CLTLogger",      package: "clt-logger"),
-		], path: "Sources"),
+		], path: "Sources", exclude: ["ScriptingBridge/ Readme.md"]),
 	]
 )
