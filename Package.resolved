@@ -1,0 +1,51 @@
+{
+  "originHash" : "bd70d18330754c9b39a7a9aebb5952a315e7343c980cc15800ab95f345e7d23b",
+  "pins" : [
+    {
+      "identity" : "clt-logger",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/xcode-actions/clt-logger.git",
+      "state" : {
+        "revision" : "466436154f6b54f7f54dd14c7e1ee887ecb979e0",
+        "version" : "1.0.0-beta.4"
+      }
+    },
+    {
+      "identity" : "swift-argument-parser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-argument-parser.git",
+      "state" : {
+        "revision" : "41982a3656a71c768319979febd796c6fd111d5c",
+        "version" : "1.5.0"
+      }
+    },
+    {
+      "identity" : "swift-log",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-log.git",
+      "state" : {
+        "revision" : "96a2f8a0fa41e9e09af4585e2724c4e825410b91",
+        "version" : "1.6.2"
+      }
+    },
+    {
+      "identity" : "swift-xdg",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Frizlab/swift-xdg.git",
+      "state" : {
+        "revision" : "d6183353dacd2747fb0ed71e2d49c09676987b98",
+        "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "tomldecoder",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dduan/TOMLDecoder.git",
+      "state" : {
+        "revision" : "018127977b7f67e4d60938ca69db2c56ff265109",
+        "version" : "0.3.1"
+      }
+    }
+  ],
+  "version" : 3
+}
