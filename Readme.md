@@ -15,7 +15,7 @@ Update your Slack status with the current song playing via the Music.app.
 
    4. Scroll up to the top of the page and click “Install App to Workspace”;
 
-   5. Copy the `OAuth Access Token`, this will be used as the `SLACK_SECRET_TOKEN`;
+   5. Copy the `OAuth Access Token`; you’ll need it to configure `apple-music-to-slack`;
 
 2. Clone the repo & compile with `swift build -c release`;
 
