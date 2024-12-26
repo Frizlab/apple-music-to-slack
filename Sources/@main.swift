@@ -17,6 +17,9 @@ struct Main : AsyncParsableCommand {
 	@Flag(inversion: .prefixedNo)
 	var verbose: Bool = false
 	
+	@Flag(inversion: .prefixedNo, help: "Use a random emoji from a list of pre-defined ones. If set to false, the :notes: emoji will be used.")
+	var useRandomEmoji: Bool = false
+	
 	@Option
 	var slackToken: String?
 	
@@ -47,7 +50,7 @@ struct Main : AsyncParsableCommand {
 		/* Finally, send the track info to Slack as a profile update. */
 		let content = ProfileUpdateContent(
 			statusText: "\(songInfo.artist) — \(songInfo.album) — \(songInfo.name)",
-			statusEmoji: ":notes:",
+			statusEmoji: (useRandomEmoji ? MusicEmoji.allCases.randomElement()! : .notes).rawValue,
 			statusExpiration: nil
 		)
 		var urlRequest = URLRequest(url: URL(string: "https://slack.com/api/users.profile.set")!)
