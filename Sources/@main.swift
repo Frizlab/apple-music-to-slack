@@ -20,6 +20,9 @@ struct Main : AsyncParsableCommand {
 	@Flag(inversion: .prefixedNo, help: "Use a random emoji from a list of pre-defined ones. If set to false, the :notes: emoji will be used.")
 	var useRandomEmoji: Bool = false
 	
+	@Flag(inversion: .prefixedNo, help: "Clear Slack’s status when Apple Music isn’t playing. When false, the status will remain unchanged.")
+	var clearWhenNotPlaying: Bool = true
+	
 	@Option
 	var slackToken: String?
 	
@@ -40,19 +43,23 @@ struct Main : AsyncParsableCommand {
 			throw SimpleError(message: "Cannot find the Slack token. You should either provide it as an argument or set the environment variable AMTS_SLACK_TOKEN, or finally create a settings.toml file in the config directory or the program.")
 		}
 		
-		/* Next, retrieve the current track info. */
+		/* Next, retrieve the current track info and the new profile status. */
 		let currentTrackInfo = try CurrentTrackInfo.get(logger: logger)
 		logger.debug("Sending music track info.", metadata: ["info": "\(currentTrackInfo)"])
-		guard case let .playing(songInfo) = currentTrackInfo else {
+		let content: ProfileUpdateContent
+		if case let .playing(songInfo) = currentTrackInfo {
+			content = ProfileUpdateContent(
+				statusText: "\(songInfo.artist) — \(songInfo.album) — \(songInfo.name)",
+				statusEmoji: (useRandomEmoji ? MusicEmoji.allCases.randomElement()! : .notes).rawValue,
+				statusExpiration: nil
+			)
+		} else if clearWhenNotPlaying {
+			content = ProfileUpdateContent(statusText: "", statusEmoji: "")
+		} else {
 			return logger.info("No music playing; skipping Slack profile update.", metadata: ["current-track-info": "\(currentTrackInfo)"])
 		}
 		
 		/* Finally, send the track info to Slack as a profile update. */
-		let content = ProfileUpdateContent(
-			statusText: "\(songInfo.artist) — \(songInfo.album) — \(songInfo.name)",
-			statusEmoji: (useRandomEmoji ? MusicEmoji.allCases.randomElement()! : .notes).rawValue,
-			statusExpiration: nil
-		)
 		var urlRequest = URLRequest(url: URL(string: "https://slack.com/api/users.profile.set")!)
 		urlRequest.httpMethod = "POST"
 		urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -70,8 +77,8 @@ struct Main : AsyncParsableCommand {
 	
 	private struct ProfileUpdateContent : Encodable {
 		
-		var statusText: String?
-		var statusEmoji: String?
+		var statusText: String
+		var statusEmoji: String
 		var statusExpiration: Date?
 		
 		func encode(to encoder: any Encoder) throws {
