@@ -81,6 +81,17 @@ struct Main : AsyncParsableCommand {
 		var statusEmoji: String
 		var statusExpiration: Date?
 		
+		init(statusText: String, statusEmoji: String, statusExpiration: Date? = nil) {
+			let maxStatusLength: Int = 300 /* Found in a random issue on GitHub; might not be the real value. */
+			if statusText.count > maxStatusLength {
+				self.statusText = statusText
+			} else {
+				self.statusText = String(statusText[statusText.startIndex..<statusText.index(statusText.startIndex, offsetBy: maxStatusLength - 1)]) + "…"
+			}
+			self.statusEmoji = statusEmoji
+			self.statusExpiration = statusExpiration
+		}
+		
 		func encode(to encoder: any Encoder) throws {
 			var container = encoder.container(keyedBy: RootCodingKey.self)
 			var subContainer = container.nestedContainer(keyedBy: StatusCodingKeys.self, forKey: .profile)
