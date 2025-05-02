@@ -82,7 +82,7 @@ struct Main : AsyncParsableCommand {
 		var statusExpiration: Date?
 		
 		init(statusText: String, statusEmoji: String, statusExpiration: Date? = nil) {
-			let maxStatusLength: Int = 300 /* Found in a random issue on GitHub; might not be the real value. */
+			let maxStatusLength: Int = 100 /* Empirically tested to be the max (2025-05-02). */
 			if statusText.count <= maxStatusLength {
 				self.statusText = statusText
 			} else {
